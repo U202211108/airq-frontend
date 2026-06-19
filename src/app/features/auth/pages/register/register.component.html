@@ -1,0 +1,322 @@
+<div class="register-page">
+
+    <div class="background-glow"></div>
+
+    <!-- LEFT PANEL -->
+
+    <div class="register-left">
+
+        <div class="brand-top">
+
+            <div class="logo">
+
+                <span class="material-icons">
+                    person_add
+                </span>
+
+            </div>
+
+            <div class="brand-info">
+
+                <div class="hero-badge">
+
+                    <span class="material-icons">
+                        verified
+                    </span>
+
+                    Registro Seguro
+
+                </div>
+
+                <div class="live-status">
+
+                    <span class="pulse"></span>
+
+                    Plataforma Disponible
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h1>Únete a AirQ</h1>
+
+        <p class="hero-text">
+
+            Accede a monitoreo ambiental inteligente,
+            análisis predictivo y métricas avanzadas
+            impulsadas por inteligencia artificial
+
+        </p>
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <h3>10K+</h3>
+
+                <span>Usuarios</span>
+
+            </div>
+
+            <div class="stat">
+
+                <h3>500+</h3>
+
+                <span>Sensores</span>
+
+            </div>
+
+            <div class="stat">
+
+                <h3>98%</h3>
+
+                <span>Precisión</span>
+
+            </div>
+
+        </div>
+
+        <div class="section-line"></div>
+
+        <!-- BENEFITS -->
+
+        <div class="benefits">
+
+            <div class="benefit-card">
+
+                <div class="benefit-icon">
+
+                    <span class="material-icons">
+                        air
+                    </span>
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <h4>Monitoreo Inteligente</h4>
+
+                    <p>
+                        Datos ambientales en tiempo real y alertas automáticas
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="benefit-card">
+
+                <div class="benefit-icon">
+
+                    <span class="material-icons">
+                        psychology
+                    </span>
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <h4>Predicciones con IA</h4>
+
+                    <p>
+                        Anticipa cambios ambientales mediante modelos predictivos
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="benefit-card">
+
+                <div class="benefit-icon">
+
+                    <span class="material-icons">
+                        public
+                    </span>
+
+                </div>
+
+                <div class="benefit-content">
+
+                    <h4>Impacto Ambiental</h4>
+
+                    <p>
+                        Mejora la toma de decisiones con información confiable
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="register-right">
+
+        <form [formGroup]="form" (ngSubmit)="register()" class="register-card">
+
+            <div class="card-header">
+
+                <div class="form-badge">
+
+                    <span class="material-icons">
+                        account_circle
+                    </span>
+
+                    Nueva Cuenta
+
+                </div>
+
+                <h2>Crear Cuenta</h2>
+
+                <p>
+
+                    Regístrate para acceder a todas las herramientas
+                    de monitoreo y análisis ambiental de AirQ
+
+                </p>
+
+            </div>
+
+            <!-- NOMBRE -->
+
+            <div class="field">
+
+                <label>Nombre Completo</label>
+
+                <div class="field-container">
+
+                    <span class="material-icons">
+                        person_outline
+                    </span>
+
+                    <input type="text" formControlName="fullName" placeholder="Ingrese su nombre completo">
+
+                </div>
+
+            </div>
+
+            <!-- EMAIL -->
+
+            <div class="field">
+
+                <label>Correo Electrónico</label>
+
+                <div class="field-container">
+
+                    <span class="material-icons">
+                        mail_outline
+                    </span>
+
+                    <input type="email" formControlName="email" placeholder="Ingrese su correo electrónico">
+
+                </div>
+
+            </div>
+
+            <!-- PASSWORD -->
+
+            <div class="field">
+
+                <label>Contraseña</label>
+
+                <div class="field-container">
+
+                    <span class="material-icons">
+                        lock_outline
+                    </span>
+
+                    <input type="password" formControlName="password" placeholder="Ingrese una contraseña segura">
+
+                </div>
+
+            </div>
+
+            <!-- CONFIRM -->
+
+            <div class="field">
+
+                <label>Confirmar Contraseña</label>
+
+                <div class="field-container">
+
+                    <span class="material-icons">
+                        verified_user
+                    </span>
+
+                    <input type="password" formControlName="confirmPassword" placeholder="Repita la contraseña">
+
+                </div>
+
+            </div>
+
+            <!-- TERMS -->
+
+            <div class="register-options">
+
+                <label class="remember">
+
+                    <input type="checkbox">
+
+                    <span>
+
+                        Acepto los términos y condiciones
+
+                    </span>
+
+                </label>
+
+            </div>
+
+            <!-- REGISTER -->
+
+            <button type="submit" class="register-main-btn">
+
+                <span class="material-icons">
+                    person_add
+                </span>
+
+                <span>
+                    Crear Cuenta
+                </span>
+
+            </button>
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <p class="register-text">
+
+                    ¿Ya tienes una cuenta?
+
+                </p>
+
+            </div>
+
+            <!-- LOGIN -->
+
+            <button type="button" routerLink="/login" class="login-btn-secondary">
+
+                <span class="material-icons">
+                    login
+                </span>
+
+                <span>
+                    Iniciar Sesión
+                </span>
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

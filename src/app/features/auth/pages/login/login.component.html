@@ -1,0 +1,249 @@
+<div class="login-page">
+
+    <div class="background-glow"></div>
+
+    <!-- LEFT PANEL -->
+
+    <div class="login-left">
+
+        <div class="brand-top">
+
+            <div class="logo">
+
+                <span class="material-icons">
+                    sensors
+                </span>
+
+            </div>
+
+            <div>
+
+                <div class="hero-badge">
+
+                    <span class="material-icons">
+                        public
+                    </span>
+
+                    Plataforma de Inteligencia Ambiental
+
+                </div>
+
+                <div class="live-status">
+
+                    <span class="pulse"></span>
+
+                    Sistema en Línea
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <h1>Plataforma AirQ</h1>
+
+        <div class="hero-text">
+
+            Monitoreo ambiental en tiempo real impulsado por
+            sensores IoT, análisis predictivo e inteligente
+            air quality insights
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <h3>500+</h3>
+                <span>Sensores</span>
+            </div>
+
+            <div class="stat">
+                <h3>24/7</h3>
+                <span>Monitoreo</span>
+            </div>
+
+            <div class="stat">
+                <h3>98%</h3>
+                <span>Exactitud</span>
+            </div>
+
+        </div>
+
+        <div class="section-line"></div>
+
+        <div class="features">
+
+            <div class="feature">
+
+                <span class="material-icons feature-icon">
+                    sensors
+                </span>
+
+                <div>
+
+                    <h4>Sensores en Tiempo Real</h4>
+
+                    <p>
+                        Recopilación continua de datos ambientales
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="feature">
+
+                <span class="material-icons feature-icon">
+                    analytics
+                </span>
+
+                <div>
+
+                    <h4>Análisis Avanzado</h4>
+
+                    <p>
+
+                        Tendencias históricas y perspectivas sobre la calidad del aire
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="feature">
+
+                <span class="material-icons feature-icon">
+                    auto_graph
+                </span>
+
+                <div>
+
+                    <h4>Predicciones de IA</h4>
+
+                    <p>
+                        Pronóstico de condiciones ambientales
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="login-right">
+
+        <form [formGroup]="form" (ngSubmit)="login()" class="login-card">
+
+            <div class="card-header">
+
+                <h2>
+                    Acceda a la Plataforma AirQ
+                </h2>
+
+                <p>
+                    Monitoreo de calidad del aire, actividad de sensores,
+                    análisis predictivo y perspectivas ambientales
+                    en tiempo real
+                </p>
+
+            </div>
+
+            <div class="field">
+
+                <label>Correo Electrónico</label>
+
+                <div class="field-container">
+
+                    <span class="material-icons">
+                        mail_outline
+                    </span>
+
+                    <input type="email" formControlName="email" placeholder="Enter your email">
+
+                </div>
+
+            </div>
+
+            <div class="field">
+
+                <label>Contraseña</label>
+
+                <div class="field-container">
+
+                    <span class="material-icons">
+                        lock_outline
+                    </span>
+
+                    <input type="password" formControlName="password" placeholder="Enter your password">
+
+                </div>
+
+            </div>
+
+            <!-- OPTIONS -->
+
+            <div class="login-options">
+
+                <label class="remember">
+
+                    <input type="checkbox">
+
+                    <span>
+                        Mantenme Registrado
+                    </span>
+
+                </label>
+
+                <a>
+                    ¿Has olvidado tu contraseña?
+                </a>
+
+            </div>
+
+            <!-- LOGIN -->
+
+            <button type="submit" class="login-btn">
+
+                <span class="material-icons">
+                    login
+                </span>
+
+                <span>
+                    Acceder a la Plataforma
+                </span>
+
+            </button>
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <p class="register-text">
+                    ¿No tienes una cuenta todavía?
+                </p>
+
+            </div>
+
+            <!-- REGISTER -->
+
+            <button type="button" class="register-btn" routerLink="/register">
+
+                <span class="material-icons">
+                    person_add
+                </span>
+
+                <span>
+                    Crear Cuenta
+                </span>
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,195 @@
+<div class="layout-container">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-header">
+
+      <div class="logo-icon">
+        <span class="material-icons">
+          sensors
+        </span>
+      </div>
+
+      <div class="logo-text">
+        <h2>AIRQ</h2>
+        <span>Monitoreo inteligente del aire</span>
+
+        <div class="mini-status">
+
+          <div class="status-dot"></div>
+
+          En Línea
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <nav>
+
+      <a routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          dashboard
+        </span>
+
+        Inicio
+
+      </a>
+
+      <a routerLink="/sensors" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          sensors
+        </span>
+
+        Sensores
+
+      </a>
+
+      <a routerLink="/measurements" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          thermostat
+        </span>
+
+        Medidas
+
+      </a>
+
+      <a routerLink="/analytics" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          analytics
+        </span>
+
+
+        Analítica
+
+      </a>
+
+      <a routerLink="/predictions" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          auto_graph
+        </span>
+
+        Predicciones
+
+      </a>
+
+      <a routerLink="/notifications" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          notifications
+        </span>
+
+        Notificaciones
+
+      </a>
+
+      <a routerLink="/subscriptions" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="material-icons">
+          workspace_premium
+        </span>
+
+        Subscripción
+
+      </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+
+      <button class="logout-btn" (click)="logout()">
+
+        Cerrar Sesión
+
+      </button>
+
+    </div>
+
+  </aside>
+
+  <main class="content">
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+
+        <div>
+
+          <h2>Centro de monitoreo AirQ</h2>
+
+          <span>
+            Inteligencia ambiental en tiempo real
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="topbar-actions">
+
+        <button class="icon-btn">
+
+          <span class="material-icons">
+            search
+          </span>
+
+        </button>
+
+        <button class="icon-btn" (click)="goToNotifications()">
+
+          <span class="material-icons">
+            notifications
+          </span>
+
+          @if(notificationCount > 0){
+
+          <span class="notification-badge">
+
+            {{ notificationCount }}
+
+          </span>
+
+          }
+
+        </button>
+
+        <div class="user-box">
+
+          <div class="avatar">
+            A
+          </div>
+
+          <div class="user-info">
+
+            <strong>
+              Administrador
+            </strong>
+
+            <p>
+              Administrador del sistema
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+    <section class="page-content">
+
+      <router-outlet></router-outlet>
+
+    </section>
+
+  </main>
+
+</div>

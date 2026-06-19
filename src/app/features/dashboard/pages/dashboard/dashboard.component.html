@@ -1,0 +1,213 @@
+@if (loading) {
+
+<div class="skeleton-dashboard">
+
+    <div class="skeleton-status"></div>
+
+    <div class="skeleton-grid">
+
+        <div class="skeleton-card"></div>
+
+        <div class="skeleton-card"></div>
+
+        <div class="skeleton-card"></div>
+
+        <div class="skeleton-card"></div>
+
+    </div>
+
+</div>
+
+}
+
+@else {
+
+<div class="dashboard">
+
+    <div class="hero-dashboard">
+
+        <div>
+
+            <span class="hero-badge">
+                DATOS AMBIENTALES EN TIEMPO REAL
+            </span>
+
+            <h1>
+                Centro de Inteligencia Ambiental
+            </h1>
+
+            <p>
+                Monitorización en tiempo real, análisis predictivo y concienciación medioambiental gracias a la
+                inteligencia artificial de AirQ
+            </p>
+
+        </div>
+
+        <div class="hero-indicator">
+
+            <div class="pulse-ring"></div>
+
+            <span class="material-icons">
+                sensors
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="status-card">
+
+        <div class="status-info">
+
+            <span class="status-label">
+                ÍNDICE DE CALIDAD DEL AIRE
+            </span>
+
+            <h2>
+                {{ dashboard?.airQualityStatus }}
+            </h2>
+
+            <p>
+                Basado en mediciones de sensores en tiempo real
+            </p>
+
+        </div>
+
+        <div class="status-circle">
+
+            {{ dashboard?.totalMeasurements }}
+
+            <span>
+                Muestras
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="metrics">
+
+        <div class="metric-card co2">
+
+            <div class="metric-header">
+
+                <span class="material-icons">
+                    co2
+                </span>
+
+                <h4>
+                    CO₂ promedio</h4>
+
+            </div>
+
+            <h2>
+
+                {{ dashboard?.averageCo2 }}
+
+            </h2>
+
+        </div>
+
+        <div class="metric-card pm25">
+
+            <div class="metric-header">
+
+                <span class="material-icons">
+                    air
+                </span>
+
+                <h4>
+                    Promedio de PM2.5</h4>
+
+            </div>
+
+            <h2>
+
+                {{ dashboard?.averagePm25 }}
+
+            </h2>
+
+        </div>
+
+        <div class="metric-card temperature">
+
+            <div class="metric-header">
+
+                <span class="material-icons">
+                    thermostat
+                </span>
+
+                <h4>Temperatura</h4>
+
+            </div>
+
+            <h2>
+
+                {{ dashboard?.averageTemperature }} °C
+
+            </h2>
+
+        </div>
+
+        <div class="metric-card humidity">
+
+            <div class="metric-header">
+
+                <span class="material-icons">
+                    water_drop
+                </span>
+
+                <h4>Humedad</h4>
+
+            </div>
+
+            <h2>
+
+                {{ dashboard?.averageHumidity }} %
+
+            </h2>
+
+        </div>
+
+    </div>
+
+    <div class="overview-grid">
+
+        <div class="overview-card">
+
+            <span class="material-icons">
+                health_and_safety
+            </span>
+
+            <h3>
+                {{ dashboard?.airQualityStatus }}
+            </h3>
+
+            <p>
+
+                Condición ambiental actual
+            </p>
+
+        </div>
+
+        <div class="overview-card">
+
+            <span class="material-icons">
+                analytics
+            </span>
+
+            <h3>
+                {{ dashboard?.totalMeasurements }}
+            </h3>
+
+            <p>
+                Muestras de sensores analizadas
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+}
