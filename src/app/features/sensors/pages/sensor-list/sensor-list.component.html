@@ -151,10 +151,22 @@
 
                 <span class="quality-dot" [class.good-dot]="getAirQuality(measurement)==='BUENO'"
                     [class.moderate-dot]="getAirQuality(measurement)==='MODERADO'"
-                    [class.low]="getAirQuality(measurement)==='CRÍTICO'">
+                    [class.low-dot]="getAirQuality(measurement)==='CRÍTICO'">
                 </span>
 
                 {{ getAirQuality(measurement) }}
+
+            </div>
+
+            } @else {
+
+            <div class="mini-quality waiting">
+
+                <span class="material-icons">
+                    schedule
+                </span>
+
+                Esperando telemetría
 
             </div>
 
@@ -169,6 +181,26 @@
                 <span>
                     IoT Device
                 </span>
+
+            </div>
+
+            <div class="sensor-actions">
+
+                <button class="edit-btn" (click)="editSensor(sensor)">
+
+                    <span class="material-icons">
+                        edit
+                    </span>
+
+                </button>
+
+                <button class="delete-btn" (click)="openDeleteModal(sensor.id)">
+
+                    <span class="material-icons">
+                        delete
+                    </span>
+
+                </button>
 
             </div>
 
@@ -283,16 +315,24 @@
 
                 </div>
 
+                <div class="device-health">
+                    ...
+                </div>
+
                 } @else {
 
                 <div class="empty-measurement">
 
                     <span class="material-icons">
-                        cloud_off
+                        sensors_off
                     </span>
 
+                    <h4>
+                        Sin telemetría registrada
+                    </h4>
+
                     <p>
-                        No existen mediciones para este sensor
+                        Este sensor aún no ha enviado datos ambientales
                     </p>
 
                 </div>
@@ -318,11 +358,23 @@
     <div class="sensor-modal" (click)="$event.stopPropagation()">
 
         <h2>
-            Registrar sensor
+
+            {{
+            editingSensorId
+            ? 'Editar Sensor'
+            : 'Registrar Sensor'
+            }}
+
         </h2>
 
         <p>
-            Agregar un nuevo sensor ambiental
+
+            {{
+            editingSensorId
+            ? 'Actualiza la información del sensor'
+            : 'Agregar un nuevo sensor ambiental'
+            }}
+
         </p>
 
         <form [formGroup]="sensorForm" (ngSubmit)="createSensor()">
@@ -330,21 +382,21 @@
             <div class="modal-field">
 
                 <label>
-
                     Número de serie
                 </label>
 
                 <input formControlName="serialNumber">
+
             </div>
 
             <div class="modal-field">
 
                 <label>
-
                     Ubicación
                 </label>
 
                 <input formControlName="location">
+
             </div>
 
             <div class="modal-actions">
@@ -357,13 +409,68 @@
 
                 <button type="submit" class="save-btn">
 
-                    Crear Sensor
+                    {{
+
+                    editingSensorId
+
+                    ? 'Actualizar Sensor'
+
+                    : 'Crear Sensor'
+
+                    }}
 
                 </button>
 
             </div>
 
         </form>
+
+    </div>
+
+</div>
+
+}
+
+@if(showDeleteModal){
+
+<div class="delete-overlay">
+
+    <div class="delete-modal">
+
+        <span class="material-icons warning-icon">
+
+            warning
+
+        </span>
+
+        <h2>
+
+            Eliminar Sensor
+
+        </h2>
+
+        <p>
+
+            Esta acción eliminará el sensor
+            permanentemente.
+
+        </p>
+
+        <div class="delete-actions">
+
+            <button class="cancel-btn" (click)="closeDeleteModal()">
+
+                Cancelar
+
+            </button>
+
+            <button class="danger-btn" (click)="confirmDelete()">
+
+                Eliminar
+
+            </button>
+
+        </div>
 
     </div>
 

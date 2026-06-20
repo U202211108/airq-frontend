@@ -227,7 +227,8 @@ export class AnalyticsDashboardComponent
 
         alerts.push(
           `🔴 ${measurement.sensor.serialNumber}
-   presenta contaminación crítica`
+(${measurement.sensor.location})
+presenta contaminación crítica`
         );
 
       }
@@ -238,8 +239,9 @@ export class AnalyticsDashboardComponent
       ) {
 
         alerts.push(
-          `🟡 Sensor #${measurement.sensor}
-        requiere monitoreo preventivo`
+          `🟡 ${measurement.sensor.serialNumber}
+(${measurement.sensor.location})
+requiere monitoreo preventivo`
         );
 
       }

@@ -62,4 +62,26 @@ export class SensorService {
       sensor
     );
   }
+
+  updateSensor(
+    id: number,
+    sensor: CreateSensor
+  ): Observable<Sensor> {
+
+    return this.http.put<Sensor>(
+      `${this.api}/${id}`,
+      sensor
+    );
+
+  }
+
+  deleteSensor(
+    id: number
+  ): Observable<void> {
+
+    return this.http.delete<void>(
+      `${this.api}/${id}`
+    );
+
+  }
 }

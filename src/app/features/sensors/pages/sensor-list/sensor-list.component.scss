@@ -367,16 +367,142 @@
 
 .sensor-modal {
 
-    width: 500px;
+    width: 540px;
+
+    background:
+        linear-gradient(180deg,
+            #ffffff,
+            #f8fafc);
+
+    border-radius: 32px;
+
+    padding: 36px;
+
+    box-shadow:
+        0 30px 80px rgba(15, 23, 42, .25);
+
+    animation:
+        modalShow .4s ease;
+}
+
+.delete-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(15, 23, 42, .65);
+
+    backdrop-filter:
+        blur(8px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 2000;
+}
+
+.delete-modal {
+
+    width: 420px;
 
     background: white;
 
     border-radius: 28px;
 
-    padding: 32px;
+    padding: 34px;
+
+    text-align: center;
 
     animation:
         modalShow .35s ease;
+}
+
+.warning-icon {
+
+    font-size: 64px;
+
+    color: #ef4444;
+
+    margin-bottom: 12px;
+}
+
+.delete-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.danger-btn {
+
+    flex: 1;
+
+    border: none;
+
+    height: 52px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(135deg,
+            #ef4444,
+            #dc2626);
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.waiting {
+
+    color: #64748b;
+
+    background: rgba(148, 163, 184, .12);
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    width: fit-content;
+}
+
+.waiting .material-icons {
+
+    font-size: 18px;
+}
+
+.empty-measurement h4 {
+
+    margin: 10px 0;
+
+    color: #0f172a;
+}
+
+.empty-measurement p {
+
+    margin: 0;
+
+    text-align: center;
+}
+
+.danger-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 15px 30px rgba(239, 68, 68, .35);
 }
 
 .modal-field {
@@ -806,4 +932,144 @@
     margin-bottom: 10px;
 
     color: #0f172a;
+}
+
+.device-health {
+
+    margin-top: 24px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e2e8f0;
+}
+
+.device-health h4 {
+
+    margin-bottom: 16px;
+
+    color: #0f172a;
+
+    font-size: .95rem;
+}
+
+.health-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+}
+
+.health-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px;
+
+    border-radius: 16px;
+
+    background: #f8fafc;
+}
+
+.health-item .material-icons {
+
+    color: #06b6d4;
+
+    font-size: 28px;
+}
+
+.health-item strong {
+
+    display: block;
+
+    color: #0f172a;
+}
+
+.health-item small {
+
+    color: #64748b;
+}
+
+.sensor-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.edit-btn,
+.delete-btn {
+
+    flex: 1;
+
+    height: 46px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition: .35s ease;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.edit-btn {
+
+    background:
+        linear-gradient(135deg,
+            rgba(59, 130, 246, .12),
+            rgba(6, 182, 212, .12));
+
+    color: #0284c7;
+}
+
+.edit-btn:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(6, 182, 212, .25);
+}
+
+.delete-btn {
+
+    background:
+        linear-gradient(135deg,
+            rgba(239, 68, 68, .12),
+            rgba(244, 63, 94, .12));
+
+    color: #ef4444;
+}
+
+.delete-btn:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(239, 68, 68, .25);
+}
+
+.edit-btn .material-icons,
+.delete-btn .material-icons {
+
+    font-size: 22px;
 }

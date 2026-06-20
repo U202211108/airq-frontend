@@ -1,51 +1,58 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   inject
-}
-  from '@angular/core';
+} from '@angular/core';
 
 import {
-  interval
+  interval,
+  Subscription
 } from 'rxjs';
 
-import { FormsModule }
-  from '@angular/forms';
+import {
+  FormsModule,
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
+import {
+  CommonModule,
+  DatePipe
+} from '@angular/common';
 
 import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import { DatePipe } from '@angular/common';
+import {
+  SensorService
+} from '../../../../core/services/sensor';
 
 import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-}
-  from '@angular/forms';
+  MeasurementService
+} from '../../../../core/services/measurement';
 
-import { CommonModule }
-  from '@angular/common';
+import {
+  Sensor
+} from '../../../../core/models/sensor.model';
 
-import { SensorService }
-  from '../../../../core/services/sensor';
-
-import { Sensor }
-  from '../../../../core/models/sensor.model';
-
-import { MeasurementService }
-  from '../../../../core/services/measurement';
-
-import { Measurement }
-  from '../../../../core/models/measurement.model';
+import {
+  Measurement
+} from '../../../../core/models/measurement.model';
 
 @Component({
   selector: 'app-sensor-list',
 
   standalone: true,
 
-  imports: [CommonModule, ReactiveFormsModule, DatePipe, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    DatePipe,
+    FormsModule
+  ],
 
   templateUrl:
     './sensor-list.component.html',
@@ -54,72 +61,43 @@ import { Measurement }
     './sensor-list.component.scss'
 })
 export class SensorListComponent
-  implements OnInit {
+  implements OnInit, OnDestroy {
 
   private sensorService =
     inject(SensorService);
 
-  private cdr =
-    inject(ChangeDetectorRef);
-
   private measurementService =
     inject(MeasurementService);
 
+  showDeleteModal = false;
+
+  sensorToDelete: number | null = null;
+
+  private cdr =
+    inject(ChangeDetectorRef);
+
   private fb =
     inject(FormBuilder);
+
+  private refreshSubscription?:
+    Subscription;
+
+  sensors: Sensor[] = [];
+
+  measurementsMap:
+    Record<number, Measurement[]> = {};
+
+  loading = true;
 
   showModal = false;
 
   searchTerm = '';
 
-  expandedSensorId: number | null = null;
+  expandedSensorId:
+    number | null = null;
 
-  measurementsMap:
-    Record<number, Measurement[]> = {};
-
-  toggleSensor(
-    sensorId: number
-  ): void {
-
-    this.expandedSensorId =
-      this.expandedSensorId === sensorId
-        ? null
-        : sensorId;
-  }
-
-  sensors: Sensor[] = [];
-
-  get filteredSensors(): Sensor[] {
-
-    if (!this.searchTerm.trim()) {
-      return this.sensors;
-    }
-
-    const term =
-      this.searchTerm.toLowerCase();
-
-    return this.sensors.filter(sensor =>
-
-      sensor.serialNumber
-        .toLowerCase()
-        .includes(term)
-
-      ||
-
-      sensor.location
-        .toLowerCase()
-        .includes(term)
-
-      ||
-
-      sensor.id
-        .toString()
-        .includes(term)
-
-    );
-  }
-
-  loading = true;
+  editingSensorId:
+    number | null = null;
 
   sensorForm =
     this.fb.group({
@@ -136,6 +114,80 @@ export class SensorListComponent
 
     });
 
+  ngOnInit(): void {
+
+    this.loadSensors();
+
+    this.refreshSubscription =
+      interval(15000)
+        .subscribe(() => {
+
+          this.loadSensors();
+
+        });
+
+  }
+
+  openDeleteModal(
+    sensorId: number
+  ): void {
+
+    this.sensorToDelete =
+      sensorId;
+
+    this.showDeleteModal =
+      true;
+
+  }
+
+  confirmDelete(): void {
+
+    if (
+      !this.sensorToDelete
+    ) {
+      return;
+    }
+
+    this.sensorService
+      .deleteSensor(
+        this.sensorToDelete
+      )
+      .subscribe({
+
+        next: () => {
+
+          delete this.measurementsMap[
+            this.sensorToDelete!
+          ];
+
+          this.loadSensors();
+
+          this.showDeleteModal =
+            false;
+
+        }
+
+      });
+
+  }
+
+  closeDeleteModal(): void {
+
+    this.showDeleteModal =
+      false;
+
+    this.sensorToDelete =
+      null;
+
+  }
+
+  ngOnDestroy(): void {
+
+    this.refreshSubscription
+      ?.unsubscribe();
+
+  }
+
   loadSensors(): void {
 
     this.loading = true;
@@ -146,9 +198,12 @@ export class SensorListComponent
 
         next: sensors => {
 
-          console.log('Sensores cargados:', sensors);
-
           this.sensors = sensors;
+
+          console.log(
+            'Sensores cargados:',
+            sensors
+          );
 
           sensors.forEach(sensor => {
 
@@ -158,21 +213,36 @@ export class SensorListComponent
 
                 next: measurements => {
 
-                  this.measurementsMap[sensor.id] =
-                    measurements;
-
                   console.log(
-                    'Mediciones sensor',
+                    'Sensor:',
                     sensor.id,
+                    'Measurements:',
                     measurements
                   );
 
+                  this.measurementsMap[
+                    sensor.id
+                  ] = measurements;
+
                   this.cdr.detectChanges();
+
+                },
+
+                error: error => {
+
+                  console.error(
+                    'Error obteniendo mediciones',
+                    error
+                  );
+
                 }
+
               });
+
           });
 
           this.loading = false;
+
         },
 
         error: error => {
@@ -180,113 +250,170 @@ export class SensorListComponent
           console.error(error);
 
           this.loading = false;
+
         }
-      });
-  }
-
-  ngOnInit(): void {
-
-    this.loadSensors();
-
-    interval(15000)
-      .subscribe(() => {
-
-        this.loadSensors();
 
       });
+
   }
 
-  openModal() {
+  get filteredSensors():
+    Sensor[] {
+
+    if (
+      !this.searchTerm.trim()
+    ) {
+      return this.sensors;
+    }
+
+    const term =
+      this.searchTerm.toLowerCase();
+
+    return this.sensors.filter(
+      sensor =>
+
+        sensor.serialNumber
+          .toLowerCase()
+          .includes(term)
+
+        ||
+
+        sensor.location
+          .toLowerCase()
+          .includes(term)
+
+        ||
+
+        sensor.id
+          .toString()
+          .includes(term)
+    );
+
+  }
+
+  toggleSensor(sensorId: number): void {
+
+    this.expandedSensorId =
+      this.expandedSensorId === sensorId
+        ? null
+        : sensorId;
+
+  }
+
+  openModal(): void {
+
+    this.editingSensorId = null;
+
+    this.sensorForm.reset();
 
     this.showModal = true;
+
   }
 
-  closeModal() {
+  closeModal(): void {
 
     this.showModal = false;
 
+    this.editingSensorId = null;
+
     this.sensorForm.reset();
+
   }
 
-  createSensor() {
+  createSensor(): void {
 
-    if (this.sensorForm.invalid) return;
+    if (this.sensorForm.invalid) {
+      return;
+    }
+
+    const payload =
+      this.sensorForm.getRawValue();
+
+    if (this.editingSensorId) {
+
+      this.sensorService
+        .updateSensor(
+          this.editingSensorId,
+          payload as any
+        )
+        .subscribe({
+
+          next: () => {
+
+            this.closeModal();
+
+            this.loadSensors();
+
+          },
+
+          error: console.error
+
+        });
+
+      return;
+    }
 
     this.sensorService
-      .createSensor(
-        this.sensorForm.getRawValue() as any
-      )
+      .createSensor(payload as any)
+      .subscribe({
+        next: () => {
+
+          this.closeModal();
+          this.loadSensors();
+
+        }
+      });
+
+  }
+
+  editSensor(
+    sensor: Sensor
+  ): void {
+
+    this.editingSensorId =
+      sensor.id;
+
+    this.sensorForm.patchValue({
+
+      serialNumber:
+        sensor.serialNumber,
+
+      location:
+        sensor.location
+
+    });
+
+    this.showModal = true;
+
+  }
+
+  deleteSensor(
+    id: number
+  ): void {
+
+    const confirmed =
+      confirm(
+        '¿Deseas eliminar este sensor?'
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.sensorService
+      .deleteSensor(id)
       .subscribe({
 
-        next: sensor => {
+        next: () => {
 
-          const qualityType =
-            Math.floor(Math.random() * 3);
+          delete this.measurementsMap[id];
 
-          let measurementData;
-
-          switch (qualityType) {
-
-            case 0:
-
-              measurementData = {
-
-                sensorId: sensor.id,
-
-                co2: 500,
-
-                pm25: 12,
-
-                temperature: 23,
-
-                humidity: 58
-
-              };
-
-              break;
-
-            case 1:
-
-              measurementData = {
-
-                sensorId: sensor.id,
-
-                co2: 850,
-
-                pm25: 22,
-
-                temperature: 26,
-
-                humidity: 63
-
-              };
-
-              break;
-
-            default:
-
-              measurementData = {
-
-                sensorId: sensor.id,
-
-                co2: 1200,
-
-                pm25: 40,
-
-                temperature: 31,
-
-                humidity: 72
-
-              };
-
-          }
-
-          this.measurementService
-            .createMeasurement(measurementData)
+          this.loadSensors();
 
         },
 
-        error: console.error
+        error:
+          console.error
 
       });
 
@@ -297,7 +424,9 @@ export class SensorListComponent
   ): Measurement | null {
 
     const measurements =
-      this.measurementsMap[sensorId];
+      this.measurementsMap[
+      sensorId
+      ];
 
     if (
       !measurements ||
@@ -309,10 +438,12 @@ export class SensorListComponent
     return measurements[
       measurements.length - 1
     ];
+
   }
 
   getAirQuality(
-    measurement: Measurement | null
+    measurement:
+      Measurement | null
   ): string {
 
     if (!measurement) {
@@ -334,19 +465,23 @@ export class SensorListComponent
     }
 
     return 'BUENO';
+
   }
 
-  get activeSensors() {
+  get activeSensors(): number {
 
     return this.sensors.filter(
       sensor => sensor.active
     ).length;
+
   }
 
-  get inactiveSensors() {
+  get inactiveSensors(): number {
 
     return this.sensors.filter(
       sensor => !sensor.active
     ).length;
+
   }
+
 }
